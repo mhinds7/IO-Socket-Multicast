@@ -1,0 +1,46 @@
+package IO::Socket::Multicast
+
+The IO::Socket::Multicast module adds methods to IO::Socket that
+enable you to manipulate multicast groups.  With this module (and an
+operating system that supports multicasting), you will be able to
+receive incoming multicast packets and generate your own outgoing
+multicast packets.  This module is compatible with MBONE.
+
+SYNOPSIS:
+
+  use IO::Socket::Multicast;
+
+  # create a new UDP socket ready to read datagrams on port 1100
+  my $s = IO::Socket::INET->new(Proto=>'udp',LocalPort=>1100);
+
+  # Add a multicast group
+  $s->mcast_add('225.0.1.1');
+
+  # Add a multicast group to eth0 device
+  $s->mcast_add('225.0.0.2','eth0');
+
+  # now receive some multicast data
+  $s->recv($data,1024);
+
+  # Drop a multicast group
+  $s->mcast_drop('225.0.0.1');
+
+  # Set outgoing interface to eth0
+  $s->mcast_if('eth0');
+
+  # Set time to live on outgoing multicast packets
+  $s->ttl(10);
+
+  # Turn off loopbacking
+  $s->loopback(0);
+
+  # Multicast a message to group 225.0.0.1
+  $s->mcast_send('hello world!','225.0.0.1:1200');
+  $s->mcast_set('225.0.0.2:1200');
+  $s->mcast_send('hello again!');
+
+AUTHOR:
+
+Lincoln Stein, lstein@cshl.org
+
+

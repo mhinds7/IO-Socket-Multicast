@@ -1,0 +1,9 @@
+Revision history for Perl extension Ioctl::Atmark.
+
+0.02  July 17, 2000
+	First release
+
+0.01  Fri Mar 31 11:28:47 2000
+	- original version; created by h2xs 1.20 with options
+		-n Ioctl::Atmark -cf
+
