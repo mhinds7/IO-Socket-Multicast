@@ -1,5 +1,12 @@
 Revision history for Perl extension IO::Socket::Multicast
 
+0.25 Sun Jan  7 14:59:24 EST 2001
+	- All symbols now in IO::Socket::Multicast package.
+		(some were in IO::Socket in previous versions)
+
+0.20 October 2000
+	Better documentation. 
+
 0.11	August 1, 2000
 	Fixed core dumps on some systems.
 	Added warnings about broken linuxes.

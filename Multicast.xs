@@ -23,7 +23,7 @@ not_here(char *s)
     return -1;
 }
 
-MODULE = IO::Socket::Multicast	PACKAGE = IO::Socket
+MODULE = IO::Socket::Multicast	PACKAGE = IO::Socket::Multicast
 
 void
 _mcast_add(sock,mcast_group,interface_addr="")
