@@ -7,7 +7,7 @@ use IO::Socket::Multicast;
 use constant GROUP => '226.1.1.2';
 use constant PORT  => '2000';
 
-my $sock = IO::Socket::INET->new(Proto=>'udp',LocalPort=>PORT);
+my $sock = IO::Socket::Multicast->new(LocalPort=>PORT);
 $sock->mcast_add(GROUP) || die "Couldn't set group: $!\n";
 
 while (1) {

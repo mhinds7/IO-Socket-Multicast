@@ -16,7 +16,7 @@ sub test {
   print $flag ? "ok " : "not ok ",$test,"\n";
 }
 
-my $s = IO::Socket::INET->new(Proto=>'udp');
+my $s = IO::Socket::Multicast->new;
 test ($s->mcast_add('225.0.1.1'),     2);
 test ($s->mcast_drop(inet_aton('225.0.1.1')),    3);
 test (!$s->mcast_drop('225.0.1.1'),   4);

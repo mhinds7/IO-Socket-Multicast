@@ -20,21 +20,26 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT = ( );
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
-@ISA = qw(Exporter DynaLoader);
-$VERSION = '0.02';
+@ISA = qw(Exporter DynaLoader IO::Socket::INET);
+$VERSION = '0.03';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
-
-# This "interesting" bit of code loads our functions into IO::Socket,
-# to "improve" it.
-{ 
-  no strict 'refs';
-  *{"IO\:\:Socket\:\:$_"} = \&$_ foreach @functions;
-}
 
 sub import {
   Socket->export_to_level(1,@_);
   IO::Socket::Multicast->export_to_level(1,@_);
+}
+
+sub new {
+  my $class = shift;
+  unshift @_,(Proto => 'udp') unless @_;
+  $class->SUPER::new(@_);
+}
+
+sub configure {
+  my($self,$arg) = @_;
+  $arg->{Proto} ||= 'udp';
+  $self->SUPER::configure($arg);
 }
 
 sub mcast_add {
@@ -112,7 +117,7 @@ IO::Socket::Multicast - Perl extension for blah blah blah
   use IO::Socket::Multicast;
 
   # create a new UDP socket ready to read datagrams on port 1100
-  my $s = IO::Socket::INET->new(Proto=>'udp',LocalPort=>1100);
+  my $s = IO::Socket::Multicast->new(LocalPort=>1100);
 
   # Add a multicast group
   $s->mcast_add('225.0.1.1');
@@ -142,11 +147,11 @@ IO::Socket::Multicast - Perl extension for blah blah blah
 
 =head1 DESCRIPTION
 
-The IO::Socket::Multicast module adds methods to IO::Socket that
-enable you to manipulate multicast groups.  With this module (and an
+The IO::Socket::Multicast module subclasses IO::Socket::INET to enable
+you to manipulate multicast groups.  With this module (and an
 operating system that supports multicasting), you will be able to
-receive incoming multicast packets and generate your own outgoing
-multicast packets.  This module is compatible with MBONE.
+receive incoming multicast transmissions and generate your own
+outgoing multicast packets.
 
 =head2 INTRODUCTION
 
@@ -186,13 +191,17 @@ messages is received by the local machine), call mcast_loopback().
 
 =over 4
 
-=item $socket = IO::Socket::INET->new(Proto=>'udp',LocalPort=>$port)
+=item $socket = IO::Socket::Multicast->new(LocalPort=>$port)
 
-There is no special constructor for the IO::Socket::Multicast class.
-Instead, loading the module adds methods to IO::Socket.  Create a UDP
-socket as usual, using IO::Socket::INET.  Be sure to specify a
-protocol of "udp" and, for sockets that will be used for incoming
-multicast transmissions, to explicitly bind the socket to a port using
+The new() method is the constructor for the IO::Socket::Multicast
+class.  It takes the same arguments as IO::Socket::INET, except that
+the B<Proto> argument, rather than defaulting to "tcp", will default
+to "udp", which is more appropriate for multicasting.
+
+To create a UDP socket suitable for sending outgoing multicast
+messages, call new() without no arguments (or with
+C<Proto=E<gt>'udp'>).  To create a UDP socket that can also receive
+incoming multicast transmissions on a specific port, call new() with
 the B<LocalPort> argument.
 
 =back
