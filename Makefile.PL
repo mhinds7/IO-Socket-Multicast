@@ -4,6 +4,9 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
 	      NAME	=> 'IO::Socket::Multicast',
 	      VERSION_FROM => 'Multicast.pm', # finds $VERSION
+	      PREREQ_PM => {
+			    'IO::Interface' => 0.94,
+			   },
 	      LIBS	=> [''],   # e.g., '-lm' 
 	      DEFINE	=> '',     # e.g., '-DHAVE_SOMETHING' 
 	      INC	=> '',     # e.g., '-I/usr/include/other' 

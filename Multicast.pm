@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
@@ -152,6 +152,8 @@ you to manipulate multicast groups.  With this module (and an
 operating system that supports multicasting), you will be able to
 receive incoming multicast transmissions and generate your own
 outgoing multicast packets.
+
+This module requires IO::Interface version 0.94 or higher.
 
 =head2 INTRODUCTION
 
@@ -362,13 +364,18 @@ output.
    print $data;
  }
 
-
 =head2 EXPORT
 
 None by default.  However, if you wish to call mcast_add(),
 mcast_drop(), mcast_if(), mcast_loopback(), mcast_ttl, mcast_dest()
 and mcast_send() as functions you may import them explicitly on the
 B<use> line or by importing the tag ":functions".
+
+=head2 BUGS
+
+The mcast_if() method will cause a crash on versions of Linux earlier
+than 2.2.0 because of a kernel bug in the implementation of
+getsockopt().
 
 =head1 AUTHOR
 

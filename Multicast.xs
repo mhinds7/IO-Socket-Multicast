@@ -83,7 +83,7 @@ mcast_loopback(sock,...)
      PROTOTYPE: $;$
      PREINIT:
      int fd,len;
-     unsigned char previous,loopback;
+     int previous,loopback;
      CODE:
      {
        fd = PerlIO_fileno(sock);
@@ -108,7 +108,7 @@ mcast_ttl(sock,...)
      PROTOTYPE: $;$
      PREINIT:
      int fd,len;
-     unsigned char previous,ttl;
+     int previous,ttl;
      CODE:
      {
        fd = PerlIO_fileno(sock);

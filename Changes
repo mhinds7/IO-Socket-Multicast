@@ -1,5 +1,10 @@
 Revision history for Perl extension IO::Socket::Multicast
 
+0.11	August 1, 2000
+	Fixed core dumps on some systems.
+	Added warnings about broken linuxes.
+	IO::Interface 0.94 is now a prerequisite.
+
 0.10  July 18, 2000
 	Documentation bug fixes
 

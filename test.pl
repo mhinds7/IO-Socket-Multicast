@@ -26,15 +26,16 @@ test ($s->mcast_ttl         == 10,    7);
 test ($s->mcast_loopback    == 1,     8);
 test ($s->mcast_loopback(0) == 1,     9);
 test ($s->mcast_loopback    == 0,    10);
-if (eval "use IO::Interface ':flags'; 1;" && (my $mcast_if = find_a_mcast_if())) {
+if ((`uname -sr` !~ /^Linux 2\.0/)             # getsockopt for if screwed up on early linux
+    && (eval "use IO::Interface ':flags'; 1;") 
+    && (my $mcast_if = find_a_mcast_if())) {
   test ($s->mcast_if  eq 'any'    ,    11);
   test ($s->mcast_if($mcast_if) eq 'any', 12);
   test ($s->mcast_if eq $mcast_if       , 13);
   test ($s->mcast_add('225.0.1.1',$mcast_if)  , 14);
 } else {
-  test ($s->mcast_if  eq '0.0.0.0'    ,    11);
-  print "ok $_ # Skip. IO::Interface not available or no multicast interface found\n"
-    foreach (12..14);
+  print "ok $_ # Skip. IO::Interface not available, no multicast interface found, or using bad version of linux\n"
+    foreach (11..14);
 }
 
 sub find_a_mcast_if {
