@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '0.25';
+$VERSION = '0.21';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
@@ -135,10 +135,10 @@ IO::Socket::Multicast - Send and receive multicast messages
   $s->mcast_if('eth0');
 
   # Set time to live on outgoing multicast packets
-  $s->ttl(10);
+  $s->mcast_ttl(10);
 
   # Turn off loopbacking
-  $s->loopback(0);
+  $s->mcast_loopback(0);
 
   # Multicast a message to group 225.0.0.1
   $s->mcast_send('hello world!','225.0.0.1:1200');
