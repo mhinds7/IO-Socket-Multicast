@@ -1,10 +1,10 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#include "stdio.h"
-#include "errno.h"
 #include "config.h"
 
+#include <stdio.h>
+#include <errno.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 
@@ -82,8 +82,9 @@ mcast_loopback(sock,...)
      InputStream sock
      PROTOTYPE: $;$
      PREINIT:
-     int fd,len;
-     int previous,loopback;
+     int fd;
+     int len;
+     char previous,loopback;
      CODE:
      {
        fd = PerlIO_fileno(sock);
@@ -94,7 +95,7 @@ mcast_loopback(sock,...)
        
        if (items > 1) { /* set value */
 	 loopback = SvIV(ST(1));
-	 if (setsockopt(fd,IPPROTO_IP,IP_MULTICAST_LOOP,&loopback,sizeof(loopback)) < 0)
+	 if (setsockopt(fd,IPPROTO_IP,IP_MULTICAST_LOOP,(void*)&loopback,sizeof(loopback)) < 0)
 	   XSRETURN_UNDEF;
        }
        RETVAL = previous;
@@ -107,8 +108,9 @@ mcast_ttl(sock,...)
      InputStream sock
      PROTOTYPE: $;$
      PREINIT:
-     int fd,len;
-     int previous,ttl;
+     int fd;
+     int len;
+     char previous,ttl;
      CODE:
      {
        fd = PerlIO_fileno(sock);
@@ -119,7 +121,7 @@ mcast_ttl(sock,...)
        
        if (items > 1) { /* set value */
 	 ttl = SvIV(ST(1));
-	 if (setsockopt(fd,IPPROTO_IP,IP_MULTICAST_TTL,&ttl,sizeof(ttl)) < 0)
+	 if (setsockopt(fd,IPPROTO_IP,IP_MULTICAST_TTL,(void*)&ttl,sizeof(ttl)) < 0)
 	   XSRETURN_UNDEF;
        }
        RETVAL = previous;
@@ -133,6 +135,7 @@ _mcast_if(sock,...)
      PROTOTYPE: $;$
      PREINIT:
      int                fd,len;
+     STRLEN             slen;
      char*              addr;
      struct in_addr     ifaddr;
      struct ip_mreq     mreq;
@@ -140,7 +143,7 @@ _mcast_if(sock,...)
      {
        fd = PerlIO_fileno(sock);
        if (items > 1) { /* setting interface */
-	 addr = SvPV(ST(1),len);
+	 addr = SvPV(ST(1),slen);
 	 if (inet_aton(addr,&ifaddr) == 0 )
 	   XSRETURN_EMPTY;
 	 if (setsockopt(fd,IPPROTO_IP,IP_MULTICAST_IF,(void*)&ifaddr,sizeof(ifaddr)) == 0)

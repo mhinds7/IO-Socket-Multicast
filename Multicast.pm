@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '0.11';
+$VERSION = '0.20';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
@@ -373,9 +373,9 @@ B<use> line or by importing the tag ":functions".
 
 =head2 BUGS
 
-The mcast_if() method will cause a crash on versions of Linux earlier
-than 2.2.0 because of a kernel bug in the implementation of
-getsockopt().
+The mcast_if(), mcast_ttl() and mcast_loopback() methods will cause a
+crash on versions of Linux earlier than 2.2.0 because of a kernel bug
+in the implementation of the multicast socket options.
 
 =head1 AUTHOR
 
