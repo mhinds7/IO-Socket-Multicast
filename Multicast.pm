@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '0.03';
+$VERSION = '0.10';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
@@ -110,7 +110,7 @@ __END__
 
 =head1 NAME
 
-IO::Socket::Multicast - Perl extension for blah blah blah
+IO::Socket::Multicast - Send and receive multicast messages
 
 =head1 SYNOPSIS
 

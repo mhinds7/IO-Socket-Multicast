@@ -1,4 +1,10 @@
-Revision history for Perl extension Ioctl::Atmark.
+Revision history for Perl extension IO::Socket::Multicast
+
+0.10  July 18, 2000
+	Documentation bug fixes
+
+0.03  July 18, 2000
+	Turned into a subclass of IO::Socket::INET
 
 0.02  July 17, 2000
 	First release
