@@ -6,7 +6,7 @@ use IO::Socket::Multicast;
 
 use constant DESTINATION => '226.1.1.2:2000';
 
-my $sock = IO::Socket::Multicast->new;
+my $sock = IO::Socket::Multicast->new(ReuseAddr=>1);
 
 while (1) {
   my $message = localtime;

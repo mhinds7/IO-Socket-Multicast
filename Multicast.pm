@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '0.21';
+$VERSION = '1.00';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
@@ -193,7 +193,7 @@ messages is received by the local machine), call mcast_loopback().
 
 =over 4
 
-=item $socket = IO::Socket::Multicast->new(LocalPort=>$port)
+=item $socket = IO::Socket::Multicast->new([LocalPort=>$port,...])
 
 The new() method is the constructor for the IO::Socket::Multicast
 class.  It takes the same arguments as IO::Socket::INET, except that
@@ -205,6 +205,10 @@ messages, call new() without no arguments (or with
 C<Proto=E<gt>'udp'>).  To create a UDP socket that can also receive
 incoming multicast transmissions on a specific port, call new() with
 the B<LocalPort> argument.
+
+If you plan to run the client and server on the same machine, you may
+wish to set the IO::Socket B<ReuseAddr> argument to a true value.
+This allows multiple multicast sockets to bind to the same address.
 
 =back
 
@@ -229,6 +233,24 @@ address is acceptable.  If no interface is specified, then the
 multicast group is joined on INADDR_ANY, meaning that multicast
 transmissions received on B<any> of the host's network interfaces will
 be forwarded to the socket.
+
+Note that mcast_add() operates on the underlying interface(s) and not
+on the socket. If you have multiple sockets listening on a port, and
+you mcast_add() a group to one of those sockets, subsequently B<all>
+the sockets will receive mcast messages on this group. To filter
+messages that can be received by a socket so that only those sent to a
+particular multicast address are received, pass the B<LocalAddr>
+option to the socket at the time you create it:
+
+  my $socket = IO::Socket::Multicast->new(LocalPort=>2000,
+                                          LocalAddr=>226.1.1.2',
+                                          ReuseAddr=>1);
+  $socket->mcast_add('226.1.1.2');
+
+By combining this technique with IO::Select, you can write
+applications that listen to multiple multicast groups and distinguish
+which group a message was addressed to by identifying which socket it
+was received on.
 
 =item $success = $socket->mcast_drop($multicast_address)
 
@@ -332,7 +354,7 @@ chosen arbitrarily).
  use IO::Socket::Multicast;
 
  use constant DESTINATION => '226.1.1.2:2000'; 
- my $sock = IO::Socket::INET->new(Proto=>'udp',PeerAddr=>DESTINATION);
+ my $sock = IO::Socket::Multicast->new(Proto=>'udp',PeerAddr=>DESTINATION);
 
  while (1) {
    my $message = localtime;
@@ -355,7 +377,7 @@ output.
  use constant GROUP => '226.1.1.2';
  use constant PORT  => '2000';
 
- my $sock = IO::Socket::INET->new(Proto=>'udp',LocalPort=>PORT);
+ my $sock = IO::Socket::Multicast->new(Proto=>'udp',LocalPort=>PORT);
  $sock->mcast_add(GROUP) || die "Couldn't set group: $!\n";
 
  while (1) {

@@ -1,8 +1,6 @@
 Revision history for Perl extension IO::Socket::Multicast
-
-0.21	July 15, 2002
-	Fixed documentation bug for mcast_ttl() and mcast_loopback()
-	calls.
+0.25	August 25, 2001
+        Document ReuseAddr
 
 0.11	August 1, 2000
 	Fixed core dumps on some systems.
