@@ -1,4 +1,14 @@
 Revision history for Perl extension IO::Socket::Multicast
+1.01	July 5, 2005
+	All symbols now in IO::Socket::Multicast package
+            (some were in IO::Socket in previous versions)
+	Incorporates patches to compile cleanly on Win32 systems,
+		contributed by Thomas Kratz.
+
+1.00	April 9, 2005
+	Reconstructed module after CVS server crash.
+	Fixed documentation errors
+
 0.25	August 25, 2001
         Document ReuseAddr
 

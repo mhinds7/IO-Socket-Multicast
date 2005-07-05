@@ -4,13 +4,13 @@ use ExtUtils::MakeMaker;
 use Config;
 
 my @libs = ();
-push @libs,'-lresolv' unless $Config{d_inetaton};
+push @libs,'-lresolv' unless $Config{d_inetaton} or $^O eq 'MSWin32';
 
 WriteMakefile(
 	      NAME	=> 'IO::Socket::Multicast',
 	      VERSION_FROM => 'Multicast.pm', # finds $VERSION
 	      PREREQ_PM => {
-			    'IO::Interface' => 0.94,
+			    $^O eq 'MSWin32' ? () : ('IO::Interface' => 0.94),
 			   },
 	      LIBS	=> \@libs,   # e.g., '-lm' 
 	      DEFINE	=> '',     # e.g., '-DHAVE_SOMETHING' 

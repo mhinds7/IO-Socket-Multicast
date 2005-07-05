@@ -57,6 +57,8 @@ sub find_a_mcast_if {
   my $s = shift;
   my @ifs = $s->if_list;
   foreach (@ifs) {
-    return $_ if $s->if_flags($_) & IFF_MULTICAST();
+    next unless $s->if_flags($_) & IFF_MULTICAST();
+    next unless $s->if_flags($_) & IFF_RUNNING();
+    return $_;
   }
 }

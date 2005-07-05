@@ -7,3 +7,4 @@ Makefile.PL
 test.pl
 examples/server.pl
 examples/client.pl
+META.yml                                 Module meta-data (added by MakeMaker)
