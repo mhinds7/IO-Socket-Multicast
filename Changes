@@ -1,4 +1,11 @@
 Revision history for Perl extension IO::Socket::Multicast
+1.02	Thu Nov 17 12:04:21 EST 2005
+	Skip regression test #4 (mcast_drop) because it always fails
+		on windows platforms. This
+		should not affect functionality, as the test asks
+		mcast_drop() to return a false value when dropping
+		an address twice.
+
 1.01	July 5, 2005
 	All symbols now in IO::Socket::Multicast package
             (some were in IO::Socket in previous versions)

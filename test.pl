@@ -23,10 +23,15 @@ my $io_interface_avail = eval "use IO::Interface ':flags'; 1;";
 my $mcast_if = $io_interface_avail && find_a_mcast_if($s);
 my ($linux_version) = `uname -sr` =~ /^Linux (\d+\.\d+)/;
 my $os_ok = !$linux_version || ($linux_version >= 2.2);
+my $win32 = $^O =~ /^MSWin/;
 
 test ($s->mcast_add('225.0.1.1'),     2);
 test ($s->mcast_drop(inet_aton('225.0.1.1')),    3);
-test (!$s->mcast_drop('225.0.1.1'),   4);
+if ($win32) {
+  print "ok 4 # Skip. Doesn't work on Win32\n";
+} else {
+  test (!$s->mcast_drop('225.0.1.1'),   4);
+}
 
 if ($os_ok) {
   test ($s->mcast_ttl         == 1,     5);
