@@ -25,7 +25,36 @@ not_here(char *s)
     return -1;
 }
 
+/* Recent versions of Win32 platforms are confused about these constants due to 
+ problems in the order of socket header file importation */
+
 #ifdef WIN32
+#if (PERL_REVISION >=5) && (PERL_VERSION >= 8) && (PERL_SUBVERSION >= 6)
+#undef  IP_OPTIONS
+#undef  IP_HDRINCL
+#undef  IP_TOS
+#undef  IP_TTL
+#undef  IP_MULTICAST_IF
+#undef  IP_MULTICAST_TTL
+#undef  IP_MULTICAST_LOOP
+#undef  IP_ADD_MEMBERSHIP
+#undef  IP_DROP_MEMBERSHIP
+#undef  IP_DONTFRAGMENT
+
+#define IP_OPTIONS          1 
+#define IP_HDRINCL          2
+#define IP_TOS              3
+#define IP_TTL              4
+#define IP_MULTICAST_IF     9 
+#define IP_MULTICAST_TTL   10
+#define IP_MULTICAST_LOOP  11
+#define IP_ADD_MEMBERSHIP  12
+#define IP_DROP_MEMBERSHIP 13
+#define IP_DONTFRAGMENT    14
+#endif
+#endif
+
+#ifndef HAS_INET_ATON
 static int
 my_inet_aton(register const char *cp, struct in_addr *addr)
 {

@@ -1,4 +1,7 @@
 Revision history for Perl extension IO::Socket::Multicast
+1.03-1.04 Fri Dec  2 10:44:35 EST 2005
+	Various fixes to compile cleanly on Windows platforms.
+
 1.02	Thu Nov 17 12:04:21 EST 2005
 	Skip regression test #4 (mcast_drop) because it always fails
 		on windows platforms. This

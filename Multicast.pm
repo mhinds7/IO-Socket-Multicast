@@ -21,7 +21,7 @@ my @functions = qw(mcast_add mcast_drop mcast_if mcast_loopback
 @EXPORT_OK = @{ $EXPORT_TAGS{'all'} };
 
 @ISA = qw(Exporter DynaLoader IO::Socket::INET);
-$VERSION = '1.02';
+$VERSION = '1.04';
 
 my $IP = '\d+\.\d+\.\d+\.\d+';
 
