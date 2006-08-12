@@ -1,3 +1,6 @@
+#ifdef WIN32
+#include <windows.h>
+#endif
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
