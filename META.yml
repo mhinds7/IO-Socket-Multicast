@@ -1,11 +1,21 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         IO-Socket-Multicast
-version:      1.05
-version_from: Multicast.pm
-installdirs:  site
+--- #YAML:1.0
+name:               IO-Socket-Multicast
+version:            1.06_01
+abstract:           ~
+author:  []
+license:            unknown
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+build_requires:
+    ExtUtils::MakeMaker:  0
 requires:
-    IO::Interface:                 0.94
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+    IO::Interface:  0.94
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.52
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
