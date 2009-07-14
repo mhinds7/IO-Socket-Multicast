@@ -1,17 +1,13 @@
-01_multicast.t
 Changes
 examples/client.pl
 examples/server.pl
 lib/IO/Socket/Multicast.pm
 Makefile.PL
-MANIFEST			This list of files
-Multicast.bs
-Multicast.c
-Multicast.o
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
 Multicast.xs
-patch/toaster.patch
 README
 t/01_use.t
 t/02_main.t
-toaster.patch
-META.yml                                 Module meta-data (added by MakeMaker)
+t/03_multicast.t
+win32.patch

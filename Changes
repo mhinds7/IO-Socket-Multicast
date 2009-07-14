@@ -1,7 +1,10 @@
-Revision history for Perl extension IO-Socket-Multicast
+Revision history for Perl extension IO::Socket::Multicast
+1.07	Tue Jul 14 12:54:46 EDT 2009
+        Patches to run correctly on Windows platforms under Perl 5.10
+		courtesy Andrew Bramble
+        Regression test fixes.
 
-1.05_01 Mon Jun 29 7:00:00 AEST 2009
-	Prepare a developer release addressing test/build
+1.06    Beta test
 
 1.05	Sat Aug 12 17:28:41 EDT 2006
 	Run correctly on Windows platforms under Perl 5.8.8.

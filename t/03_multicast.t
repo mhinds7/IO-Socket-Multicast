@@ -1,3 +1,10 @@
+#!/usr/bin/perl
+
+BEGIN {
+	$|  = 1;
+	$^W = 1;
+}
+
 use Test::More tests => 13;
 
 use IO::Socket::Multicast;
@@ -13,7 +20,7 @@ my $s = IO::Socket::Multicast->new;
 my $io_interface_avail = eval "use IO::Interface ':flags'; 1;";
 my $mcast_if = $io_interface_avail && find_a_mcast_if($s);
 my ($linux_version) = `uname -sr` =~ /^Linux (\d+\.\d+)/;
-my $os_ok = !$linux_version || ($linux_version >= 2.2);
+my $os_ok = $linux_version && ($linux_version >= 2.2);
 my $win32 = $^O =~ /^MSWin/;
 
 ok($s->mcast_add('225.0.1.1'), 'Add socket to Multicast Group' );
@@ -32,10 +39,10 @@ if ($os_ok) {
   ok($s->mcast_ttl         == 10,    'Get TTL post-set returns correct TTL');
   ok($s->mcast_loopback    == 1,     'Multicast loopback defaults to true');
   ok($s->mcast_loopback(0) == 1,     'Loopback set returns previous value' );
-  test ($s->mcast_loopback    == 0,   'Loopback get' );
-}  {
-  skip  "Needs Linux >= 2.2\n", 5;
-}
+  ok($s->mcast_loopback    == 0,   'Loopback get' );
+} else {
+  skip  "Needs Linux >= 2.2\n", 6;
+  }
 }
 
 if ($io_interface_avail && $mcast_if && $os_ok) {
