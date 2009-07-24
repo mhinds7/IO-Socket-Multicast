@@ -3,11 +3,9 @@ examples/client.pl
 examples/server.pl
 lib/IO/Socket/Multicast.pm
 Makefile.PL
-MANIFEST
-META.yml			Module meta-data (added by MakeMaker)
+MANIFEST			This list of files
 Multicast.xs
 README
 t/01_use.t
 t/02_main.t
-t/03_multicast.t
-win32.patch
+META.yml                                 Module meta-data (added by MakeMaker)
