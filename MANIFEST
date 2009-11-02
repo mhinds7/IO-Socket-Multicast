@@ -7,5 +7,5 @@ MANIFEST			This list of files
 Multicast.xs
 README
 t/01_use.t
-t/02_main.t
+t/03_multicast.t
 META.yml                                 Module meta-data (added by MakeMaker)

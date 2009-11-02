@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               IO-Socket-Multicast
-version:            1.07_02
+version:            1.08
 abstract:           Send and receive multicast messages
 author:  []
 license:            perl
