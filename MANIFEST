@@ -8,4 +8,5 @@ Multicast.xs
 README
 t/01_use.t
 t/03_multicast.t
+t/04_send.t
 META.yml                                 Module meta-data (added by MakeMaker)
