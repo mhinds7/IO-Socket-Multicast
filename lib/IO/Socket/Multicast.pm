@@ -12,6 +12,7 @@ BEGIN {
 use vars qw(@ISA @EXPORT_OK @EXPORT %EXPORT_TAGS $VERSION);
 BEGIN {
   my @functions = qw(
+    mcast_all
     mcast_add
     mcast_drop
     mcast_if
@@ -20,7 +21,7 @@ BEGIN {
     mcast_dest
     mcast_send
   );
-  $VERSION = '1.12';
+  $VERSION = '1.13';
   @ISA = qw(
     Exporter
     DynaLoader
@@ -51,6 +52,11 @@ sub configure {
   my($self,$arg) = @_;
   $arg->{Proto} ||= 'udp';
   $self->SUPER::configure($arg);
+}
+
+sub mcast_all {
+  my ($sock, $on) = @_;
+  return $sock->_mcast_all($on);
 }
 
 sub mcast_add {
