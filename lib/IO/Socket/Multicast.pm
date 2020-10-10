@@ -44,8 +44,15 @@ sub import {
 
 sub new {
   my $class = shift;
-  unshift @_,(Proto => 'udp') unless @_;
-  $class->SUPER::new(@_);
+  my %keyvals = @_;
+  my $proto = $keyvals{Proto};
+  if (!defined($proto)) { $keyvals{Proto} = 'udp' }
+  elsif ($proto ne 'udp') { die("Invlaid Proto => '$proto'") }
+  my $mcast_all = defined($keyvals{McastAll}) ? delete($keyvals{McastAll}) : undef;
+  $mcast_all eq '0' || $mcast_all eq '1' || die("Invalid McastAll => '$mcast_all'");
+  my $sock = $class->SUPER::new(%keyvals);
+  !defined($mcast_all) || $sock->_mcast_all($mcast_all);
+  return $sock;
 }
 
 sub configure {
@@ -138,6 +145,11 @@ IO::Socket::Multicast - Send and receive multicast messages
 
   # create a new UDP socket ready to read datagrams on port 1100
   my $s = IO::Socket::Multicast->new(LocalPort=>1100);
+
+  # Change delivery policy to only deliver messages only
+  # from the groups that have been explicitly joined.
+  # See man 7 ip - IP_MULTICAST_ALL
+  $s->mcast_all(0);
 
   # Add a multicast group
   $s->mcast_add('225.0.1.1');
