@@ -308,3 +308,15 @@ _mcast_if(sock,...)
        }
      }
 
+void
+_mcast_all(sock, enable)
+     InputStream sock
+     unsigned enable
+     PROTOTYPE: $$
+     CODE:
+         int fd = PerlIO_fileno(sock);
+         if (setsockopt(fd, IPPROTO_IP, IP_MULTICAST_ALL, (void*)&enable, sizeof(enable)) == 0)
+	     XSRETURN_YES;
+         else
+	     XSRETURN_NO;
+
